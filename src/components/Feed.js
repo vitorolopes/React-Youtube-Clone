@@ -1,17 +1,20 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, {useEffect} from 'react';
 import { useStateContext } from '../contexts/StateContextProvider';
 import Loader from './Loader';
-// import HorizontalScroll from 'react-scroll-horizontal';
-import HorizontalScroll from 'react-horizontal-scrolling'
+import HorizontalScroll from 'react-scroll-horizontal';
 
 const Feed = () => {
 
-  const {loading, fetchButtonsOrDetailsData,
-         buttonsOrDetailsData} = useStateContext()
+  const {loading, fetchButtonsOrDetailsData, buttonsOrDetailsData,
+         fetchVideosData, videosData
+        } = useStateContext()
 
   useEffect(() => {
+    //* fetches the info to "label" the buttons (latter on will fetch more stuff)
     fetchButtonsOrDetailsData('videoCategories?part=snippet');
+     //* fetches the videos that are displayed on loading 
+    fetchVideosData("videos?part=snippet&chart=mostPopular")
   }, [])
   
 
@@ -20,13 +23,14 @@ const Feed = () => {
   return (
     <Box>
        <Box
-           className="categories"
-           sx={{
-                display: "flex", gap: 5, overflow: "auto", 
-                width: "100%", height: "100%", mt: 10, mb: 10,
-           }}
-       >
-            <HorizontalScroll style={{backgroundColor: "blue"}}>  
+                className='categories'
+                sx={{
+                    display: 'flex', gap: 5, overflow: 'auto',
+                    width: '100%', height: '100px', mt: 10,
+                }}
+            > 
+{/* <HorizontalScroll> Positioning the cursor over the buttons & Ctrl+Scroll */}
+                <HorizontalScroll reverseScroll={true}> 
                     {buttonsOrDetailsData.map((category) => (
                         <Button
                             className='category-button'
@@ -46,12 +50,33 @@ const Feed = () => {
                              {category.snippet.title}
                         </Button>
                     ))}
-            </HorizontalScroll>
-            
-       </Box>
+                </HorizontalScroll>
+            </Box>
 
-         <Box style={{height: "200px", border:"solid 3px red"}}>
-            MAP VIDEOS
+         <Box sx={{
+                display: 'flex', flexWrap: 'wrap', justifyContent: 'center',
+                alignItems: 'center', gap: 2, p: 1,
+              }}>
+            
+              <Box>
+                <Typography sx={{ fontSize: 25, fontWeight: 900, p: 3, pb: 1, pt: 0 }}>
+                            Recommended Videos
+                </Typography>
+              </Box>  
+
+              <Box
+                  sx={{
+                  display: 'flex', flexWrap: 'wrap', gap: 2, p: 1,
+                  justifyContent: 'center', alignItems: 'center',
+                  }}
+              >
+                {videosData.map( video => 
+                  <div>{video.snippet.localized.title}</div>
+                )}
+              </Box>
+
+              
+
         </Box> 
 
     </Box>
