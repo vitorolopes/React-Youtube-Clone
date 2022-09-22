@@ -18,7 +18,7 @@ export const StateContextProvider = ( {children} ) => {
                                         params:{
                                             key: process.env.REACT_APP_API_KEY,
                                             maxResults: 5,
-                                            regionCode:"IN"   
+                                            regionCode:"PT"   
                                         } 
                                      }
         )
@@ -35,7 +35,7 @@ export const StateContextProvider = ( {children} ) => {
                                         params:{
                                             key: process.env.REACT_APP_API_KEY,
                                             maxResults: 5,
-                                            regionCode:"IN"   
+                                            regionCode:"PT"   
                                         }   
                                      }
         )

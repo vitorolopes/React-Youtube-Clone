@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import { useStateContext } from '../contexts/StateContextProvider';
 import Loader from './Loader';
 import HorizontalScroll from 'react-scroll-horizontal';
+import VideoItem from './VideoItem'
 
 const Feed = () => {
 
@@ -22,6 +23,7 @@ const Feed = () => {
 
   return (
     <Box>
+
        <Box
                 className='categories'
                 sx={{
@@ -51,34 +53,32 @@ const Feed = () => {
                         </Button>
                     ))}
                 </HorizontalScroll>
-            </Box>
+      </Box>
 
-         <Box sx={{
-                display: 'flex', flexWrap: 'wrap', justifyContent: 'center',
-                alignItems: 'center', gap: 2, p: 1,
-              }}>
-            
-              <Box>
-                <Typography sx={{ fontSize: 25, fontWeight: 900, p: 3, pb: 1, pt: 0 }}>
-                            Recommended Videos
-                </Typography>
-              </Box>  
+      <Box sx={{
+            display: 'flex', flexWrap: 'wrap', justifyContent: 'center',
+            alignItems: 'center', gap: 2, p: 1,
+          }}>
+        
+          <Typography sx={{ fontSize: 25, fontWeight: 900, p: 3, pb: 1, pt: 0 }}>
+                        Recommended Videos
+          </Typography>
 
-              <Box
-                  sx={{
-                  display: 'flex', flexWrap: 'wrap', gap: 2, p: 1,
-                  justifyContent: 'center', alignItems: 'center',
-                  }}
-              >
-                {videosData.map( video => 
-                  <div>{video.snippet.localized.title}</div>
-                )}
-              </Box>
+      </Box>  
 
-              
-
-        </Box> 
-
+      <Box
+          sx={{
+          display: 'flex', flexWrap: 'wrap', gap: 2, p: 1,
+          justifyContent: 'center', alignItems: 'center',
+          }}
+      >
+        {videosData.map( video => {
+          return(
+            <VideoItem video={video}/>
+          )  
+        })}
+      </Box>
+      
     </Box>
   )
 }
