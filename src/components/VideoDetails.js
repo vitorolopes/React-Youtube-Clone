@@ -5,13 +5,14 @@ import { useStateContext } from '../contexts/StateContextProvider';
 import ReactPlayer from 'react-player';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import VideoItem from './VideoItem'
 
 
 const VideoDetails = () => {
 
   const {id} = useParams();
 
-  const {fetchButtonsOrDetailsData, buttonsOrDetailsData} = useStateContext();
+  const {fetchButtonsOrDetailsData, buttonsOrDetailsData, fetchVideosData, videosData} = useStateContext();
 
   const [videoDetails, setVideoDetails] = useState()
 
@@ -22,6 +23,10 @@ const VideoDetails = () => {
     // the Details of the Video that was clicked and
     // sets buttonsOrDetailsData to be equal to
     // the data that this request retrieves
+
+    fetchVideosData(`search?part=snippet&relatedToVideoId=${id}&type=video`);
+    // We request the Videos (related videos!) and set videosData to be equal to
+    // the data that the request retrieves
   }, [id])
   
   useEffect(() => {
@@ -91,7 +96,7 @@ const VideoDetails = () => {
                           className='like-dislike'
                       >
                         {/* //* LIKES count*/}
-                        <Typography
+                        <Box
                           sx={{
                             marginBottom: '5px',
                             display: 'flex',
@@ -106,7 +111,7 @@ const VideoDetails = () => {
                               videoDetails?.statistics?.likeCount
                             ).toLocaleString('en-US')}
                           </Typography>
-                        </Typography>
+                        </Box>
                         {/* //* DISLIKES */}
                         <Typography
                           sx={{
@@ -132,6 +137,33 @@ const VideoDetails = () => {
 
 
 {/* // * RIGHT SIDE BOX start*/}
+        <Box
+            sx={{
+              mt: 10,
+            }}
+            className='related-videos'
+          >
+
+            <Typography
+              sx={{ fontSize: 25, fontWeight: 800, m: 2, textAlign: 'center' }}
+            >
+              Similar Videos
+            </Typography>
+
+            <Box className='related-videos-container'>
+              {videosData.map((video) => {
+                return (
+                <VideoItem
+                  video={video}
+                   id={(video.id.videoId && video.id.videoId) || video.id}
+                //  in some videos the id is in video.id property
+                //  in some videos the id is in video.id.videoId property
+                   key={(video.id.videoId && video.id.videoId) || video.id}
+                />)
+              })}
+            </Box>
+
+        </Box>
 {/* // * RIGHT SIDE BOX end*/}
 
     </Box>

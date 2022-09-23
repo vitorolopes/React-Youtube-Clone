@@ -74,7 +74,7 @@ const Feed = () => {
       >
         {videosData.map( video => {
           return(
-            <VideoItem video={video}/>
+            <VideoItem video={video} key={video.id}/>
           )  
         })}
       </Box>

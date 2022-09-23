@@ -23,7 +23,7 @@ export const StateContextProvider = ( {children} ) => {
                                      }
         )
         setLoading(false)
-        console.log(data.data.items);
+      //  console.log(data.data.items);
         setButtonsOrDetailsData(data.data.items)
     }
 
@@ -40,7 +40,7 @@ export const StateContextProvider = ( {children} ) => {
                                      }
         )
         setLoading(false)
-        console.log(data.data.items)
+      //  console.log(data.data.items)
         setVideosData(data.data.items)
     }
 

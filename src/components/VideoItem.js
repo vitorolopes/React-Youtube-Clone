@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const VideoItem = ({video}) => {
-  console.log(video)
+  //console.log(video)
 
   return (
     <Link
