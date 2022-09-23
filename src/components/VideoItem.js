@@ -1,10 +1,22 @@
 import React from 'react';
 import { Typography, Card, CardContent, CardMedia } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 
 const VideoItem = ({video}) => {
   console.log(video)
 
   return (
+    <Link
+      to={
+          video.snippet //! some object videos do not have the snippet property ...
+          ? 
+            `video-details/${video.id}`
+          :
+            `/video-details/cV2gBU6hKfY` //! ... in that case redirect to here
+          }
+      style={{textDecoration: "none"}}
+    >
 
       <Card
           className='recipe-card'
@@ -33,6 +45,8 @@ const VideoItem = ({video}) => {
         </CardContent>
 
       </Card>
+
+    </Link>
 
   )
 }
