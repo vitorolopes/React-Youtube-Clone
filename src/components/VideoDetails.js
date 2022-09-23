@@ -155,7 +155,7 @@ const VideoDetails = () => {
                 return (
                 <VideoItem
                   video={video}
-                   id={(video.id.videoId && video.id.videoId) || video.id}
+                  id={(video.id.videoId && video.id.videoId) || video.id}
                 //  in some videos the id is in video.id property
                 //  in some videos the id is in video.id.videoId property
                    key={(video.id.videoId && video.id.videoId) || video.id}

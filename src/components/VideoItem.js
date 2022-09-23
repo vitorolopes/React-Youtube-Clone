@@ -3,7 +3,7 @@ import { Typography, Card, CardContent, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 
-const VideoItem = ({video}) => {
+const VideoItem = ({video,id}) => {
   //console.log(video)
 
   return (
@@ -11,7 +11,7 @@ const VideoItem = ({video}) => {
       to={
           video.snippet //! some object videos do not have the snippet property ...
           ? 
-            `video-details/${video.id}`
+            `/video-details/${id}`
           :
             `/video-details/cV2gBU6hKfY` //! ... in that case redirect to here
           }

@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useStateContext } from '../contexts/StateContextProvider';
 import Loader from './Loader';
 import HorizontalScroll from 'react-scroll-horizontal';
@@ -11,12 +11,20 @@ const Feed = () => {
          fetchVideosData, videosData
         } = useStateContext()
 
+  const [buttonKeyword, setButtonKeyword] = useState()
+
   useEffect(() => {
-    //* fetches the info to "label" the buttons (latter on will fetch more stuff)
+    //* fetches the info to "label" the buttons or the data relative to the details
+    //* of a particular video clicked by the user
     fetchButtonsOrDetailsData('videoCategories?part=snippet');
-     //* fetches the videos that are displayed on loading 
-    fetchVideosData("videos?part=snippet&chart=mostPopular")
-  }, [])
+    if(buttonKeyword) {
+    //* fetches the videos that are displayed when the user clicks one of the category buttons
+       fetchVideosData(`search?part=snippet&q=${buttonKeyword}`)
+    } else {
+    //* fetches the videos that are displayed on loading 
+       fetchVideosData("videos?part=snippet&chart=mostPopular")
+    }
+  }, [buttonKeyword])
   
 
   if(loading) return <Loader/>
@@ -48,6 +56,7 @@ const Feed = () => {
                                 ml: 1,
                             }}
                             key={category.id}
+                            onClick={()=>setButtonKeyword(category.snippet.title)}
                         >
                              {category.snippet.title}
                         </Button>
@@ -61,7 +70,7 @@ const Feed = () => {
           }}>
         
           <Typography sx={{ fontSize: 25, fontWeight: 900, p: 3, pb: 1, pt: 0 }}>
-                        Recommended Videos
+                       { buttonKeyword || "Recommended "} Videos
           </Typography>
 
       </Box>  
@@ -74,7 +83,11 @@ const Feed = () => {
       >
         {videosData.map( video => {
           return(
-            <VideoItem video={video} key={video.id}/>
+            <VideoItem 
+              video={video}
+              id={(video.id.videoId && video.id.videoId) || video.id}
+              key={(video.id.videoId && video.id.videoId) || video.id}
+            />
           )  
         })}
       </Box>
